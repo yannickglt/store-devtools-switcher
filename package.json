@@ -1,7 +1,6 @@
 {
   "name": "store-devtools-switcher-example",
   "version": "1.0.0",
-  "private": true,
   "dependencies": {
     "@angular/animations": "10.0.6",
     "@angular/common": "10.0.6",
@@ -16,6 +15,7 @@
     "lodash": "4.17.19",
     "prettier": "2.0.5",
     "rxjs": "6.6.0",
+    "store-devtools-switcher": "1.0.0",
     "tslib": "2.0.0",
     "zone.js": "0.10.3"
   },
@@ -44,7 +44,6 @@
     "karma-jasmine": "1.1.2",
     "karma-jasmine-html-reporter": "0.2.2",
     "protractor": "5.4.0",
-    "store-devtools-switcher": "1.0.0",
     "ts-node": "7.0.0",
     "tslint": "5.11.0",
     "typescript": "3.9.7"
