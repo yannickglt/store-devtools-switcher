@@ -2,6 +2,7 @@ Store Devtools Switcher
 ==============
 
 Enable/disable store entries to display in Redux DevTools on the fly from the Chrome DevTools console.
+Configured entries are saved in localStorage to work after refresh.
 
 ![2020-08-05_17-41-55 (1)](https://user-images.githubusercontent.com/1006426/89434006-4fcf7c80-d743-11ea-94eb-56057fcd2f93.gif)
 

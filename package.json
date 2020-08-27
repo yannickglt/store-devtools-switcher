@@ -1,6 +1,6 @@
 {
   "name": "store-devtools-switcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hide entries from NgRx state serialization",
   "main": "dist/index.js",
   "files": ["dist"],
@@ -17,6 +17,7 @@
   "author": "Yannick Galatol",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "14.6.0",
     "prettier": "2.0.5",
     "typescript": "3.9.7"
   }

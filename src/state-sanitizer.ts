@@ -5,6 +5,7 @@ let previousDisplayedState = {}
 const displayState = state => {
   const extendedState = Object.keys(state).reduce(
     (prev, curr) => ({
+      ...prev,
       [curr]: {
         enabled: isKeyEnabled(curr),
         get ['Click on "(…)" to toggle']() {
@@ -13,8 +14,7 @@ const displayState = state => {
           console.table(extendedState)
           return 'Updated to ' + this.enabled
         }
-      },
-      ...prev
+      }
     }),
     {}
   )
@@ -33,8 +33,8 @@ const removeDisabledKeys = state =>
     .filter(isKeyEnabled)
     .reduce(
       (prev, curr) => ({
-        [curr]: state[curr],
-        ...prev
+        ...prev,
+        [curr]: state[curr]
       }),
       {}
     )
