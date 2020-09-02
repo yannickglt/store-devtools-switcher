@@ -46,9 +46,9 @@ const isCustomSanitizer = <State extends {}>(
 export const stateSanitizer = (stateOrCustomSanitizer): any => {
   if (isCustomSanitizer(stateOrCustomSanitizer)) {
     return state => {
-      const customState = stateOrCustomSanitizer(state)
-      displayState(customState)
-      return removeDisabledKeys(customState)
+      displayState(state)
+      const filteredState = removeDisabledKeys(state)
+      return stateOrCustomSanitizer(filteredState)
     }
   } else {
     displayState(stateOrCustomSanitizer)
