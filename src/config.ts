@@ -1,16 +1,20 @@
-interface StoreDevtoolsSwitcherConfig {
+export interface StoreDevtoolsSwitcherConfig {
   disabledKeys?: string[]
 }
 
-const getConfig = (): StoreDevtoolsSwitcherConfig => {
+const getConfig = (defaultConfig: StoreDevtoolsSwitcherConfig = {}): StoreDevtoolsSwitcherConfig => {
   try {
-    return JSON.parse(localStorage.getItem('store-devtool-switcher')) ?? {}
+    return JSON.parse(localStorage.getItem('store-devtool-switcher')) ?? defaultConfig
   } catch {
-    return {}
+    return defaultConfig
   }
 }
 
-const config = getConfig()
+let config: StoreDevtoolsSwitcherConfig
+
+export const initConfig = (defaultConfig?: StoreDevtoolsSwitcherConfig) => {
+  config = getConfig(defaultConfig)
+}
 
 export const setEnabledKey = (key: string, enabled: boolean) => {
   config.disabledKeys = enabled
