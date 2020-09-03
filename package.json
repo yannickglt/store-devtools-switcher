@@ -1,6 +1,6 @@
 {
   "name": "store-devtools-switcher",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Hide entries from NgRx state serialization",
   "repository": "https://github.com/yannickglt/store-devtools-switcher.git",
   "main": "dist/index.js",
