@@ -4,7 +4,9 @@
   "description": "Hide entries from NgRx state serialization",
   "repository": "https://github.com/yannickglt/store-devtools-switcher.git",
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc"
@@ -18,8 +20,11 @@
   "author": "Yannick Galatol",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "26.0.13",
     "@types/node": "14.6.0",
+    "jest": "26.4.2",
     "prettier": "2.0.5",
+    "ts-jest": "26.3.0",
     "typescript": "3.9.7"
   }
 }
