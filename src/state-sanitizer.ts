@@ -22,7 +22,7 @@ export const stateSanitizer = <State extends {}>(options?: StateSanitizerOptions
     displayState(rootSortedState)
 
     const filteredState = removeDisabledKeys(rootSortedState)
-    const deepSortedState = options?.sortKeys === 'deep' ? deepSortObject(filteredState) : filteredState // Deep sort only after keys removal for perfs purpose
+    const deepSortedState = options?.sortKeys === 'deep' ? sortObject(filteredState, true) : filteredState // Deep sort only after keys removal for perfs purpose
     return options?.customSanitizer ? options.customSanitizer(deepSortedState) : deepSortedState
   }
 }
