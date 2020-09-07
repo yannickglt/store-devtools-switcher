@@ -21,7 +21,7 @@ import { stateSanitizer } from 'store-devtools-switcher'
     BrowserModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
-      stateSanitizer
+      stateSanitizer: stateSanitizer()
     })
   ],
   declarations: [AppComponent],
@@ -33,14 +33,88 @@ export class AppModule {}
 ## With a custom sanitizer
 If you already uses a custom sanitizer, just wrap it with the store-devtools-switcher one.
 ````ts
-import { stateSanitizer as switcherSanitizer } from 'store-devtools-switcher'
+import { stateSanitizer } from 'store-devtools-switcher'
 
 @NgModule({
   imports: [
     BrowserModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
-      stateSanitizer: switcherSanitizer(myCustomSanitizer)
+      stateSanitizer: stateSanitizer({
+        customSanitizer: myCustomSanitizer
+      })
+    })
+  ],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+````
+
+## With store entries sorted alphabetically
+You can ask for the sanitizer to sort store entries alphabetically. Store keys will be sorted in both the Redux extension 
+and in the table displayed in the console for entries activation/deactivation.
+
+### Root sorting
+Only the first level of the store will be sorted alphabetically.
+````ts
+import { stateSanitizer } from 'store-devtools-switcher'
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      stateSanitizer: stateSanitizer({
+        sortKeys: 'root'
+      })
+    })
+  ],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+````
+
+### Deep sorting
+The store will be deeply sorted. 
+````ts
+import { stateSanitizer } from 'store-devtools-switcher'
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      stateSanitizer: stateSanitizer({
+        sortKeys: 'root'
+      })
+    })
+  ],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+````
+⚠ Deep sorting can affect performances if numerous/large states are displayed simultaneously.
+
+
+## With a default configuration
+Some entries can hidden by default. Disabled entries can be enabled again from the console table.
+
+````ts
+import { stateSanitizer } from 'store-devtools-switcher'
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      stateSanitizer: stateSanitizer({
+        defaultConfig: {
+          disabledKeys: ['scoreboard3']
+        }
+      })
     })
   ],
   declarations: [AppComponent],
