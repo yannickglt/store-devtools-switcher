@@ -36,6 +36,10 @@ export const setEnabledKey = (key: string, enabled: boolean) => {
 
 export const isKeyEnabled = (key: string) => !(config?.disabledKeys ?? []).includes(key)
 
+export const hasKeyDisabled = () => {
+  return (config?.disabledKeys?.length ?? 0) > 0
+}
+
 export const enableAllKeys = () => {
   config.disabledKeys = []
   saveConfig()

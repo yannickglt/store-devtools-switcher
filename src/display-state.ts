@@ -1,6 +1,7 @@
 import {
   disableAllKeys,
   enableAllKeys,
+  hasKeyDisabled,
   isKeyEnabled,
   setEnabledKey,
   SwitchActionKeys,
@@ -9,27 +10,15 @@ import {
 
 let previousDisplayedState = {}
 
-const displayEnableAllLink = (getExtendedState) => {
+const displayToggleAllLink = (state, getExtendedState) => {
+  const hasKey = hasKeyDisabled()
   return {
-    [SwitchActionKeys.EnableAll]: {
-      enabled: '',
+    [hasKey? SwitchActionKeys.EnableAll : SwitchActionKeys.DisableAll]: {
+      enabled: !hasKey,
       get ['Click on "(…)" to toggle']() {
-        enableAllKeys()
+        hasKey ? enableAllKeys() : disableAllKeys(Object.keys(state))
         displayState(getExtendedState())
-        return 'All keys have been enabled'
-      }
-    }
-  }
-}
-
-const displayDisableAllLink = (state, getExtendedState) => {
-  return {
-    [SwitchActionKeys.DisableAll]: {
-      enabled: '',
-      get ['Click on "(…)" to toggle']() {
-        disableAllKeys(Object.keys(state))
-        displayState(getExtendedState())
-        return 'All keys have been disabled'
+        return `All keys have been ${hasKey? 'enabled' : 'disabled'}`
       }
     }
   }
@@ -46,14 +35,21 @@ export const displayState = state => {
         get ['Click on "(…)" to toggle']() {
           this.enabled = !this.enabled
           setEnabledKey(curr, this.enabled)
-          console.table(extendedState)
+          const {
+            [SwitchActionKeys.DisableAll]: disableAction,
+            [SwitchActionKeys.EnableAll]: enable,
+            ...cleanExtendedState
+          } = extendedState
+          console.table({
+            ...displayToggleAllLink(state, () => cleanExtendedState),
+            ...cleanExtendedState
+          })
           return 'Updated to ' + this.enabled
         }
       }
     }),
     {
-      ...displayEnableAllLink(() => extendedState),
-      ...displayDisableAllLink(state, () => extendedState)
+      ...displayToggleAllLink(state, () => extendedState)
     }
   )
   const identical = Object.keys(extendedState).reduce(
