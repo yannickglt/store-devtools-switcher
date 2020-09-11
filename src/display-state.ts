@@ -13,12 +13,12 @@ let previousDisplayedState = {}
 const displayToggleAllLink = (state, getExtendedState) => {
   const hasKey = hasKeyDisabled()
   return {
-    [hasKey? SwitchActionKeys.EnableAll : SwitchActionKeys.DisableAll]: {
+    [hasKey ? SwitchActionKeys.EnableAll : SwitchActionKeys.DisableAll]: {
       enabled: !hasKey,
       get ['Click on "(…)" to toggle']() {
         hasKey ? enableAllKeys() : disableAllKeys(Object.keys(state))
         displayState(getExtendedState())
-        return `All keys have been ${hasKey? 'enabled' : 'disabled'}`
+        return `All keys have been ${hasKey ? 'enabled' : 'disabled'}`
       }
     }
   }
@@ -26,38 +26,31 @@ const displayToggleAllLink = (state, getExtendedState) => {
 
 export const displayState = state => {
   const extendedState = Object.keys(state)
-    .filter((item) => !switchActionsKeysArray.includes(item))
+    .filter(item => !switchActionsKeysArray.includes(item))
     .reduce(
-    (prev, curr) => ({
-      ...prev,
-      [curr]: {
-        enabled: isKeyEnabled(curr),
-        get ['Click on "(…)" to toggle']() {
-          this.enabled = !this.enabled
-          setEnabledKey(curr, this.enabled)
-          const {
-            [SwitchActionKeys.DisableAll]: disableAction,
-            [SwitchActionKeys.EnableAll]: enable,
-            ...cleanExtendedState
-          } = extendedState
-          console.table({
-            ...displayToggleAllLink(state, () => cleanExtendedState),
-            ...cleanExtendedState
-          })
-          return 'Updated to ' + this.enabled
+      (prev, curr) => ({
+        ...prev,
+        [curr]: {
+          enabled: isKeyEnabled(curr),
+          get ['Click on "(…)" to toggle']() {
+            this.enabled = !this.enabled
+            setEnabledKey(curr, this.enabled)
+            console.table({
+              ...extendedState,
+              ...displayToggleAllLink(state, () => extendedState)
+            })
+            return 'Updated to ' + this.enabled
+          }
         }
-      }
-    }),
-    {
-      ...displayToggleAllLink(state, () => extendedState)
-    }
-  )
+      }),
+      {}
+    )
   const identical = Object.keys(extendedState).reduce(
     (prev, curr) => prev && extendedState[curr].enabled === previousDisplayedState[curr]?.enabled,
     true
   )
   if (!identical) {
-    console.table(extendedState)
+    console.table({ ...extendedState, ...displayToggleAllLink(state, () => extendedState) })
     previousDisplayedState = extendedState
   }
 }
