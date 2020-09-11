@@ -1,6 +1,6 @@
 export enum SwitchActionKeys {
-  EnableAll='enable all keys',
-  DisableAll='disable all keys'
+  EnableAll = 'Enable all keys',
+  DisableAll = 'Disable all keys'
 }
 
 export const switchActionsKeysArray = Object.values(SwitchActionKeys) as string[]
