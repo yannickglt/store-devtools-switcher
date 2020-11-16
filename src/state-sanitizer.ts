@@ -1,6 +1,6 @@
 import { initConfig, isKeyEnabled } from './config'
 import { displayState } from './display-state'
-import { StateSanitizerOptions } from './options'
+import { DEFAULT_MAX_SORT_DEEP_LEVEL, StateSanitizerOptions } from './options'
 import { sortObject } from './sort-object'
 
 const removeDisabledKeys = <State extends {}>(state): Partial<State> =>
@@ -22,7 +22,10 @@ export const stateSanitizer = <State extends {}>(options?: StateSanitizerOptions
     displayState(rootSortedState)
 
     const filteredState = removeDisabledKeys(rootSortedState)
-    const deepSortedState = options?.sortKeys === 'deep' ? sortObject(filteredState, true) : filteredState // Deep sort only after keys removal for perfs purpose
+    const deepSortedState =
+      options?.sortKeys === 'deep'
+        ? sortObject(filteredState, true, options?.maxSortDeepLevel ?? DEFAULT_MAX_SORT_DEEP_LEVEL)
+        : filteredState // Deep sort only after keys removal for perfs purpose
     return options?.customSanitizer ? options.customSanitizer(deepSortedState) : deepSortedState
   }
 }
